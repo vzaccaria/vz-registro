@@ -9,7 +9,7 @@
   "man": "./man/man1/vz-registro.1",
   "scripts": {
     "test": "make test"
-    },
+  },
   "repository": {
     "type": "git",
     "url": "https://github.com/vzaccaria/vz-registro.git"
@@ -21,11 +21,12 @@
   },
   "homepage": "https://github.com/vzaccaria/vz-registro",
   "dependencies": {
+    "ansi-color": "0.2.1",
     "zaccaria-cli": "*"
   },
-    "devDependencies": {
-        "diy-build": "1.0.8",
-           "babel": "4.7.16",
+  "devDependencies": {
+    "diy-build": "1.0.8",
+    "babel": "4.7.16",
     "shelljs": "0.5.1",
     "xyz": "0.5.0",
     "zaccaria-cli": "0.2.0",

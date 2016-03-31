@@ -1,6 +1,6 @@
 /* eslint quotes: [0], strict: [0] */
 var {
-    $d, $o, $f
+    $d, $o, $fs
     // $r.stdin() -> Promise  ;; to read from stdin
 } = require('zaccaria-cli')
 
@@ -14,7 +14,7 @@ var getOptions = doc => {
 }
 
 var main = () => {
-    $f.readLocal('docs/usage.md').then(it => {
+    $fs.readFileAsync(__dirname + '/docs/usage.md', 'utf8').then(it => {
         var {
             help
         } = getOptions(it);
