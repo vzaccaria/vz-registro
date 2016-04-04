@@ -6,14 +6,16 @@ let url_logout = "https://www.intranet.polimi.it/it/c/portal/logout"
 let url_servizi = "http://www.polimi.it/servizionline"
 let url_registro = (registro) => `https://www7.ceda.polimi.it/registro_didattica/PaginaPrincipaleRegistro.do?evn_=evento&id_registro=${registro}`
 
+let viewport = {
+    top: 0,
+    left: 0,
+    width: 1280,
+    height: 1024
+}
+
 function captureFrame(name) {
     return function() {
-        this.capture(name, {
-            top: 0,
-            left: 0,
-            width: 1600,
-            height: 768
-        })
+        this.capture(name, viewport)
         info(`Saving ${name}`);
     }
 }
@@ -45,6 +47,9 @@ function login(casper) {
         info(`Logging into: ${url_login}`)
     })
     casper.then(function() {
+        this.viewport(viewport.width, viewport.height)
+    })
+    casper.then(function() {
         this.waitForSelector("#login", () => {
             warn("Login form appeared!")
         })
@@ -72,7 +77,7 @@ function logout(casper) {
     casper.thenOpen(url_logout);
     casper.run(function() {
         info("Exiting!");
-        this.die("Bye!")
+        casper.exit(0)
     })
 }
 

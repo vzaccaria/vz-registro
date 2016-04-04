@@ -3,6 +3,8 @@ let { captureFrame } = require('./_login')
 let url_registro = (registro) => `https://www7.ceda.polimi.it/registro_didattica/PaginaPrincipaleRegistro.do?evn_=evento&id_registro=${registro}`
 let url_form     = (registro, mese, anno) => `https://www7.ceda.polimi.it/registro_didattica/NuovaRiga.do?evn_=evento&id_registro=${registro}&mese=${mese}/${anno}`
 
+let url_report = (registro) => `https://www7.ceda.polimi.it/registro_didattica/ReportConsuntivo.do?evn_=evento&id_registro=${registro}`
+
 let { warn, info, error } = require('./_messages')
 
 function sanitizeData(data) {
@@ -65,6 +67,9 @@ function fillData(casper, data) {
     })
 }
 
+function openReport(casper) {
+}
+
 function openRegistro(casper) {
     let {
         registro
@@ -76,7 +81,7 @@ function openRegistro(casper) {
     casper.waitForText(label, () => {
         warn("Registro INFORMATICA B appeared!")
     })
-    casper.thenOpen(url_registro(registro))
+    casper.thenOpen(url_report(registro))
     casper.then(captureFrame("status.png"))
 }
 
