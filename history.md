@@ -5,4 +5,5 @@
 
 # Bug fixes
 
+-     use global casperjs -- [Apr 4th 16](../../commit/2f50919103842ddc20b397b45053c27a5627df50)
 -     add upload functionality -- [Apr 4th 16](../../commit/ef9997ef2d027f2f68e1aa575988f82043ad0368)
