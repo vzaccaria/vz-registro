@@ -1,0 +1,19 @@
+[
+{
+    "data_lezione_day": 29,
+    "data_lezione_month": 1,
+    "data_lezione_year": 2016,
+    "sede": "BV",
+    "c_aula": "79",
+    "c_forma_didattica": 0,
+    "contenuto": "conenuto",
+    "inizio_ore": 8,
+    "inizio_ore_min": 15,
+    "termine_ore": 11,
+    "termine_ore_min": 15,
+    "n_ore_lez": 3,
+    "n_ore_lez_min": 0,
+    "docente": "N",
+    "docente_ospite": "Zaccaria"
+}
+]

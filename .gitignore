@@ -2,3 +2,4 @@ node_modules
 lib
 makefile
 *.png
+launchTest0.sh
