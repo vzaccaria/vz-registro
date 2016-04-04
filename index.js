@@ -52,8 +52,12 @@ var main = function () {
             $s.execAsync(cmd).then(function () {
                 info("file saved in status.png");
             });
-        } else {
-            error("Not yet implemented");
+        } else if (upload) {
+            var cmd = "" + __dirname + "/node_modules/.bin/casperjs " + __dirname + "/lib/_upload.js --username=" + user + " --password=" + password + " --registro=" + registro + " --datafile=" + file;
+            warn(cmd);
+            $s.execAsync(cmd).then(function () {
+                info("finished uploading");
+            });
         }
     });
 };

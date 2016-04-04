@@ -34,8 +34,12 @@ let main = () => {
             $s.execAsync(cmd).then(() => {
                 info("file saved in status.png");
             })
-        } else {
-            error("Not yet implemented")
+        } else if(upload) {
+            let cmd = `${__dirname}/node_modules/.bin/casperjs ${__dirname}/lib/_upload.js --username=${user} --password=${password} --registro=${registro} --datafile=${file}`
+            warn(cmd);
+            $s.execAsync(cmd).then(() => {
+                info("finished uploading")
+            })
         }
     })
 }

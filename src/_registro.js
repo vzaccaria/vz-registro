@@ -67,8 +67,6 @@ function fillData(casper, data) {
     })
 }
 
-function openReport(casper) {
-}
 
 function openRegistro(casper) {
     let {
