@@ -47,13 +47,13 @@ var main = function () {
         if (help) {
             console.log(it);
         } else if (status) {
-            var cmd = "" + __dirname + "/node_modules/.bin/casperjs " + __dirname + "/lib/_status.js --username=" + user + " --password=" + password + " --registro=" + registro;
+            var cmd = "casperjs " + __dirname + "/lib/_status.js --username=" + user + " --password=" + password + " --registro=" + registro;
             warn(cmd);
             $s.execAsync(cmd).then(function () {
                 info("file saved in status.png");
             });
         } else if (upload) {
-            var cmd = "" + __dirname + "/node_modules/.bin/casperjs " + __dirname + "/lib/_upload.js --username=" + user + " --password=" + password + " --registro=" + registro + " --datafile=" + file;
+            var cmd = "casperjs " + __dirname + "/lib/_upload.js --username=" + user + " --password=" + password + " --registro=" + registro + " --datafile=" + file;
             warn(cmd);
             $s.execAsync(cmd).then(function () {
                 info("finished uploading");

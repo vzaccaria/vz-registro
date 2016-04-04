@@ -29,13 +29,13 @@ let main = () => {
         if (help) {
             console.log(it)
         } else if (status) {
-            let cmd = `${__dirname}/node_modules/.bin/casperjs ${__dirname}/lib/_status.js --username=${user} --password=${password} --registro=${registro}`
+            let cmd = `casperjs ${__dirname}/lib/_status.js --username=${user} --password=${password} --registro=${registro}`
             warn(cmd);
             $s.execAsync(cmd).then(() => {
                 info("file saved in status.png");
             })
         } else if(upload) {
-            let cmd = `${__dirname}/node_modules/.bin/casperjs ${__dirname}/lib/_upload.js --username=${user} --password=${password} --registro=${registro} --datafile=${file}`
+            let cmd = `casperjs ${__dirname}/lib/_upload.js --username=${user} --password=${password} --registro=${registro} --datafile=${file}`
             warn(cmd);
             $s.execAsync(cmd).then(() => {
                 info("finished uploading")
