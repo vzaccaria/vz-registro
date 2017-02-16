@@ -1,0 +1,7 @@
+{
+    "extends": "eslint-config-es6",
+    "rules": [0],
+    "env": {
+        "node": true
+    }
+}

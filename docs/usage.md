@@ -1,4 +1,5 @@
 Usage:
+    vz-registro get -u USER -p PASSWORD
     vz-registro status -u USER -p PASSWORD -r REGNUM
     vz-registro upload -u USER -p PASSWORD -r REGNUM -f DATAFILE
     vz-registro ( -h | --help )
