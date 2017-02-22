@@ -1,17 +1,16 @@
-let _ = require("../proxies/lodash");
+const pick = require("lodash.pick");
+const foreach = require("lodash.foreach");
 let { captureFrame } = require("./_login");
-let url_registro = registro =>
-  `https://www7.ceda.polimi.it/registro_didattica/PaginaPrincipaleRegistro.do?evn_=evento&id_registro=${registro}`;
 let url_form = (registro, mese, anno) =>
   `https://www7.ceda.polimi.it/registro_didattica/NuovaRiga.do?evn_=evento&id_registro=${registro}&mese=${mese}/${anno}`;
 
 let url_report = registro =>
   `https://www7.ceda.polimi.it/registro_didattica/ReportConsuntivo.do?evn_=evento&id_registro=${registro}`;
 
-let { warn, info, error } = require("./_messages");
+let { warn, info } = require("./_messages");
 
 function sanitizeData(data) {
-  data = _.pick(data, [
+  data = pick(data, [
     "data_lezione_month",
     "data_lezione_year",
     "data_lezione_day",
@@ -69,7 +68,7 @@ function fillData(casper, data) {
   let {
     registro
   } = casper.cli.options;
-  _.forEach(data, function(d) {
+  foreach(data, function(d) {
     info("adding " + JSON.stringify(d));
     fillForm(casper, registro, d);
   });
