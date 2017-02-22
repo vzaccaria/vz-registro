@@ -1,15 +1,17 @@
 // Casper should be required at the top level module, dont ask me why..
 
-let { iprefix, wprefix } = require("./_messages.js");
+let { info, warn } = require("./_messages.js")("Get Data");
 let { captureFrame } = require("./_login.js");
-
-let info = iprefix("Attività didattiche");
-let warn = wprefix("Attività didattiche");
 
 function openProve(casper) {
   info("Hooking up actions for scan");
-  casper.waitForText("Incarichi");
+  casper.then(() => {
+    info("Waiting for Incarichi e attività");
+    casper.then(captureFrame("waiting.png"));
+  });
+  casper.waitForText("Incarichi e attività didattiche");
   casper.then(function() {
+    info("Clicking incarichi");
     this.clickLabel("Incarichi e attività didattiche");
   });
   var label = "Prove ed elenco";

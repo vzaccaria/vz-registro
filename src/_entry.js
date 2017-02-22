@@ -2,6 +2,7 @@
 let csp = require("casper").create({ waitTimeout: 20000 });
 let { login, logout } = require("./_login");
 let { openRegistro, readData, fillData } = require("./_registro");
+let { runGet } = require("./_getdata.js");
 let { info } = require("./_messages")('Entry');
 
 function setupCasper() {
@@ -19,6 +20,7 @@ function processCommand() {
   switch (cmd) {
     case "get":
       login(casper);
+      runGet(casper);
       logout(casper);
       break;
     case "status":

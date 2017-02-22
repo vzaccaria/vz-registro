@@ -8,7 +8,19 @@ var _require = require("zaccaria-cli"),
     $s = _require.$s,
     _ = _require._;
 
-var color = require('chalk');
+var chalk = require('chalk');
+
+function warn(msg) {
+  console.error(chalk.yellow("WARN: ") + msg);
+}
+
+function info(msg) {
+  console.error(chalk.blue("INFO: ") + msg);
+}
+
+function error(msg) {
+  console.error(chalk.red(" ERR: ") + msg);
+}
 
 var getOptions = function getOptions(doc) {
   "use strict";
