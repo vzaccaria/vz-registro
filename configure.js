@@ -24,8 +24,8 @@ generateProject(_ => {
 
   _.collectSeq("all", _ => {
     _.collect("build", _ => {
-        _.babel("src/es6/*.js");
-        _.cmd("./node_modules/.bin/browserify src/es5/_entry.js --ignore-missing -o ./lib/_entry.js -t [ babelify --presets [ es2015 react ] ]");
+        _.babel("src/index.js");
+        _.cmd("./node_modules/.bin/browserify src/_entry.js --ignore-missing -o ./lib/_entry.js -t [ babelify --presets [ es2015 ] ]");
     });
     _.cmd(
       "((echo '#!/usr/bin/env node') && cat ./lib/index.js) > index.js",

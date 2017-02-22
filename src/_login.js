@@ -1,6 +1,7 @@
 const isUndefined = require("lodash.isundefined");
 
-let { info, error, iprefix } = require("./_messages");
+let g = require("./_messages");
+let {info, error} = g("Login");
 
 let url_login = "http://www.polimi.it/intranet/";
 let url_logout = "https://www.intranet.polimi.it/it/c/portal/logout";
@@ -21,9 +22,9 @@ function captureFrame(name) {
 }
 
 
-let _l_login = iprefix(url_login);
-let _l_ser   = iprefix(url_servizi);
-let _l_exit  = iprefix(url_logout);
+let _l_login = g(url_login).info;
+let _l_ser   = g(url_servizi).info;
+let _l_exit  = g(url_logout).info;
 
 function login(casper) {
   info("just starting");

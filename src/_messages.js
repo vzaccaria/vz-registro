@@ -24,4 +24,12 @@ function wprefix(p) {
     return (m) => warn(p + " » " + m);
 }
 
-module.exports = { warn, info, error, iprefix, eprefix, wprefix};
+function withprefix(p) {
+    return {
+        info: iprefix(p),
+        warn: wprefix(p),
+        error: eprefix(p)
+    };
+}
+
+module.exports = withprefix;

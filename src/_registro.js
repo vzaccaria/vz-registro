@@ -7,7 +7,7 @@ let url_form = (registro, mese, anno) =>
 let url_report = registro =>
   `https://www7.ceda.polimi.it/registro_didattica/ReportConsuntivo.do?evn_=evento&id_registro=${registro}`;
 
-let { warn, info } = require("./_messages");
+let { warn, info } = require("./_messages")("Registro");
 
 function sanitizeData(data) {
   data = pick(data, [

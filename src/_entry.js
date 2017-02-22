@@ -2,7 +2,7 @@
 let csp = require("casper").create({ waitTimeout: 20000 });
 let { login, logout } = require("./_login");
 let { openRegistro, readData, fillData } = require("./_registro");
-let { info } = require("./_messages");
+let { info } = require("./_messages")('Entry');
 
 function setupCasper() {
   csp.on("remote.message", function cb(custom) {
