@@ -7,9 +7,6 @@
     "vz-registro": "./index.js"
   },
   "man": "./man/man1/vz-registro.1",
-  "scripts": {
-    "test": "make test"
-  },
   "repository": {
     "type": "git",
     "url": "https://github.com/vzaccaria/vz-registro.git"
