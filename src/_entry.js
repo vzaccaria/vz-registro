@@ -3,7 +3,7 @@ let csp = require("casper").create({ waitTimeout: 20000 });
 let { login, logout } = require("./_login");
 let { openRegistro, readData, fillData } = require("./_registro");
 let { runGet } = require("./_getdata.js");
-let { info } = require("./_messages")('Entry');
+let { info } = require("./_messages")("Entry");
 
 function setupCasper() {
   csp.on("remote.message", function cb(custom) {
@@ -24,11 +24,17 @@ function processCommand() {
       logout(casper);
       break;
     case "status":
+      login(casper);
+      openRegistro(casper);
+      logout(casper);
+      break;
+    case "upload":
       data = readData(casper);
       login(casper);
       openRegistro(casper);
       fillData(casper, data);
       logout(casper);
+      break;
   }
 }
 
