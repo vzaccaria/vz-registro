@@ -14,7 +14,7 @@ npm install vz-registro
 Usage:
     vz-registro get    -u USER -p PASSWORD -n PERSON
     vz-registro status -u USER -p PASSWORD -n PERSON -r REGNUM
-    vz-registro upload -u USER -p PASSWORD -n PERSON -r REGNUM -f DATAFILE
+    vz-registro upload -u USER -p PASSWORD -n PERSON -r REGNUM -f DATAFILE -s START -e END [ -g ]
     vz-registro ( -h | --help )
 
 Options:
@@ -24,6 +24,9 @@ Options:
     -p, --password PASSWORD
     -r, --registro REGNUM
     -f, --file DATAFILE
+    -s, --start START                start from data entry number START (indexed from 0)
+    -e, --end END                    end at data entry number END
+    -g, --go                         default is a dryrun
 
 Commands:
 
@@ -44,6 +47,7 @@ Released under the BSD License.
 
 # New features
 
+-     add start and end command line options for importing and dryrun -- [Mar 3rd 17](../../commit/23816f8436b64a335bfc9f138b29ff487fdca0aa)
 -     add viewport change and change url for report -- [Apr 4th 16](../../commit/032660a1a6b0113ca78e082a8726bde49e119b57)
 
 # Bug fixes
