@@ -7,7 +7,7 @@ let {
   // $r.stdin() -> Promise  ;; to read from stdin
 } = require("zaccaria-cli");
 
-let chalk = require('chalk');
+let chalk = require("chalk");
 
 function warn(msg) {
   console.error(chalk.yellow("WARN: ") + msg);
@@ -17,7 +17,7 @@ function info(msg) {
   console.error(chalk.blue("INFO: ") + msg);
 }
 
-function error(msg) { 
+function error(msg) {
   console.error(chalk.red(" ERR: ") + msg);
 }
 
@@ -30,6 +30,15 @@ let getOptions = doc => {
   let personnumber = $o("-n", "--person", undefined, o);
   let registro = $o("-r", "--registro", undefined, o);
   let datafile = $o("-f", "--file", undefined, o);
+  let start = $o("-s", "--start", undefined, o);
+  let end = $o("-e", "--end", undefined, o);
+  let go = $o("-g", "--go", false, o);
+  let dryrun;
+  if (!go) {
+    dryrun = 1;
+  } else {
+    dryrun = 0;
+  }
   let cmd;
   if (o.status) {
     cmd = "status";
@@ -47,7 +56,10 @@ let getOptions = doc => {
     registro,
     datafile,
     personnumber,
-    cmd
+    cmd,
+    start,
+    end,
+    dryrun
   };
 };
 

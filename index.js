@@ -8,7 +8,7 @@ var _require = require("zaccaria-cli"),
     $s = _require.$s,
     _ = _require._;
 
-var chalk = require('chalk');
+var chalk = require("chalk");
 
 function warn(msg) {
   console.error(chalk.yellow("WARN: ") + msg);
@@ -32,6 +32,15 @@ var getOptions = function getOptions(doc) {
   var personnumber = $o("-n", "--person", undefined, o);
   var registro = $o("-r", "--registro", undefined, o);
   var datafile = $o("-f", "--file", undefined, o);
+  var start = $o("-s", "--start", undefined, o);
+  var end = $o("-e", "--end", undefined, o);
+  var go = $o("-g", "--go", false, o);
+  var dryrun = void 0;
+  if (!go) {
+    dryrun = 1;
+  } else {
+    dryrun = 0;
+  }
   var cmd = void 0;
   if (o.status) {
     cmd = "status";
@@ -49,7 +58,10 @@ var getOptions = function getOptions(doc) {
     registro: registro,
     datafile: datafile,
     personnumber: personnumber,
-    cmd: cmd
+    cmd: cmd,
+    start: start,
+    end: end,
+    dryrun: dryrun
   };
 };
 

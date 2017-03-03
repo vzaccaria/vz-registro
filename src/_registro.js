@@ -1,5 +1,8 @@
-const pick = require("lodash.pick");
 const foreach = require("lodash.foreach");
+const isundefined = require("lodash.isundefined");
+const includes = require("lodash.includes");
+const range = require("lodash.range");
+const clone = require("lodash.clone");
 let { captureFrame } = require("./_login");
 let url_form = (registro, mese, anno) =>
   `https://www7.ceda.polimi.it/registro_didattica/NuovaRiga.do?evn_=evento&id_registro=${registro}&mese=${mese}/${anno}`;
@@ -7,55 +10,48 @@ let url_form = (registro, mese, anno) =>
 let url_report = registro =>
   `https://www7.ceda.polimi.it/registro_didattica/ReportConsuntivo.do?evn_=evento&id_registro=${registro}`;
 
-let { warn, info } = require("./_messages")("Registro");
+let { warn, info, error } = require("./_messages")("Registro"); 
 
-function sanitizeData(data) {
-  data = pick(data, [
-    "data_lezione_month",
-    "data_lezione_year",
-    "data_lezione_day",
-    "sede",
-    "c_aula",
-    "c_forma_didattica",
-    "inizio_ore",
-    "inizio_ore_min",
-    "termine_ore",
-    "termine_ore_min",
-    "n_ore_lez",
-    "n_ore_lez_min",
-    "docente",
-    "docente_ospite",
-    "contenuto"
-  ]);
 
-  if (data.docente === "N") delete data.docente_ospite;
-
-  return data;
-}
+var acc = function(d) {
+  $('select[name="sede"]').val(d.sede);
+  $('select[name="c_aula"]').val(d.c_aula);
+  $('select[name="data_lezione_day"]').val(d.data_lezione_day);
+  $('select[name="inizio_ore"]').val(d.inizio_ore);
+  $('select[name="inizio_ore_min"]').val(d.inizio_ore_min);
+  $('select[name="termine_ore"]').val(d.termine_ore);
+  $('select[name="termine_ore_min"]').val(d.termine_ore_min);
+  $('select[name="n_ore_lez"]').val(d.n_ore_lez);
+  $('select[name="n_ore_lez_min"]').val(d.n_ore_lez_min);
+  $('select[name="c_forma_didattica"]').val(d.c_forma_didattica);
+  $('select[name="docente"]').val(d.docente);
+  if (d.docente === "S") {
+    $('input[name="docente_ospite"]').val(d.docente_ospite);
+  } else {
+    $('input[name="docente_ospite"]').val("");
+  }
+  $("#contenuto").text(d.contenuto);
+};
 
 function fillForm(casper, registro, datum) {
   casper.thenOpen(
     url_form(registro, datum.data_lezione_month, datum.data_lezione_year)
   );
-  casper.waitUntilVisible('input[value="Salva"]', () => {
-    warn("Form appeared, filling up data");
-  });
-  datum = sanitizeData(datum);
 
-  casper.then(function() {
-    this.fill("form", datum, false);
-    info("- Filled all fields");
-  });
-  casper.wait(2000, function() {
-    this.fillSelectors(
-      "form",
-      {
-        'select[name="c_aula"]': datum.c_aula
-      },
-      false
-    );
-    info("- Filled c_aula");
-  });
+  casper.waitUntilVisible('input[value="Salva"]', () => {
+    warn("Form appeared, choosing sede");
+  }); 
+
+  casper.thenEvaluate(
+    function(d) {
+      // Important, dont move it from here since we should download data about aule
+      $('select[name="sede"]').val(d.sede);
+    },
+    datum
+  );
+
+  casper.wait(2000);
+  casper.thenEvaluate(acc, datum);
   let name = `row${datum.data_lezione_year}${datum.data_lezione_month}${datum.data_lezione_day}-frame.png`;
   casper.then(captureFrame(name));
   casper.then(function() {
@@ -66,11 +62,33 @@ function fillForm(casper, registro, datum) {
 
 function fillData(casper, data) {
   let {
-    registro
+    registro,
+    start,
+    end,
+    dryrun
   } = casper.cli.options;
-  foreach(data, function(d) {
-    info("adding " + JSON.stringify(d));
-    fillForm(casper, registro, d);
+  if (isundefined(start)) {
+    start = 0;
+  } else {
+    start = parseInt(start);
+  }
+  if (isundefined(end)) {
+    end = data.length;
+  } else {
+    end = parseInt(end);
+  }
+  dryrun = parseInt(dryrun);
+  foreach(data, function(d, i) {
+    if (includes(range(start, end + 1), i)) {
+      info(`adding entry ${i}`);
+      if (dryrun === 0) {
+        fillForm(casper, registro, clone(d));
+      } else {
+        info("Skipping as this is a dryrun");
+      }
+    } else {
+      info(`Skipping entry ${i} - outside range`);
+    }
   });
 }
 
@@ -91,13 +109,19 @@ function openRegistro(casper) {
   casper.then(captureFrame("status.png"));
 }
 
-var fs = require("fs");
-
-function readData(casper) {
+// Poor man dependency injection
+function readData(casper, fs) {
   let {
     datafile
   } = casper.cli.options;
-  return JSON.parse(fs.read(datafile));
+  info(`Reading -> ${datafile}`);
+  try {
+    let data = fs.read(datafile);
+    return JSON.parse(data);
+  } catch (e) {
+    error(`Error thrown ${e}`);
+    casper.exit(0);
+  }
 }
 
 module.exports = {

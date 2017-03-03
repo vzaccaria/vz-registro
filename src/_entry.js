@@ -1,5 +1,8 @@
 /* LEAVE CASPER HERE !!! */
-let csp = require("casper").create({ waitTimeout: 20000 });
+let csp = require("casper").create({
+  waitTimeout: 20000
+});
+let fs = require("fs");
 let { login, logout } = require("./_login");
 let { openRegistro, readData, fillData } = require("./_registro");
 let { runGet } = require("./_getdata.js");
@@ -29,7 +32,7 @@ function processCommand() {
       logout(casper);
       break;
     case "upload":
-      data = readData(casper);
+      data = readData(casper, fs);
       login(casper);
       openRegistro(casper);
       fillData(casper, data);

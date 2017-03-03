@@ -26,7 +26,7 @@ let _l_ser = g(url_servizi).info;
 let _l_exit = g(url_logout).info;
 
 function login(casper) {
-  info("just starting");
+  info("Scheduling login");
   let username, password, personNumber;
   username = casper.cli.options.username;
   password = casper.cli.options.password;
